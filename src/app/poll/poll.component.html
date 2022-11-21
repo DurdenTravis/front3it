@@ -1,0 +1,43 @@
+<div  *ngIf="!showChart">
+
+  <header>
+   
+    <div class="p-5 text-center bg-light">
+      <h1 class="mb-3">Encuesta</h1>
+      <h4 class="mb-3">Ingresa tu preferencia</h4>
+
+    </div>
+    <!-- Jumbotron -->
+  </header>
+  <form #f="ngForm">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" name="email" [(ngModel)]="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>    
+    </div>
+    <div class="form-group">
+    <select class="form-control" name="kindMusic" [(ngModel)]="kindMusic" required>
+      <option *ngFor="let musicType of musicTypes"
+              [value]="musicType">
+              {{KindTypeLabelMapping[musicType]}}
+      </option>
+    </select>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="postPoll()" [disabled]="!f.valid">Submit</button>
+  </form>
+</div>
+<div  *ngIf="showChart">
+<div [@.disabled]="true" *ngIf="polls.length">
+    <mat-tab-group dynamicHeight>
+     
+      <mat-tab label="Gráfico de Música">
+        <ng-template matTabContent>
+          <canvasjs-chart
+            [options]="pollChartOptions"
+            [styles]="{ width: '100%', height: '360px' }"
+          ></canvasjs-chart>
+        </ng-template>
+      </mat-tab>
+     
+    </mat-tab-group>
+</div>
+</div>
